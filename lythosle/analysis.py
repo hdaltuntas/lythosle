@@ -183,7 +183,7 @@ class AnalysisResult:
         m = self.model
         g = slope_geometry(m)
         lines: List[str] = []
-        lines.append(f"Lythosle  -  limit equilibrium slope stability")
+        lines.append("Lythos LE  -  limit equilibrium slope stability")
         lines.append("=" * 62)
         lines.append(f"Model            : {m.name}")
         lines.append(f"Units            : {m.units}")

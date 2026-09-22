@@ -1,4 +1,4 @@
-/* Lythosle front end -------------------------------------------------------
+/* Lythos LE front end -------------------------------------------------------
  * Keeps one plain object for the model and one for the analysis options,
  * renders the form from it, posts it to /api/analyze and draws the result.
  * No build step and no framework: the page is served straight from disk.

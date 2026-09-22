@@ -1,4 +1,4 @@
-"""A zero-dependency web server for the Lythosle front end.
+"""A zero-dependency web server for the Lythos LE front end.
 
 Run it with ``python -m lythosle serve`` (or ``python -m lythosle.web.server``).
 It only uses :mod:`http.server`, so the whole application works on a bare
@@ -32,7 +32,7 @@ MAX_BODY = 8 * 1024 * 1024
 
 
 class Handler(BaseHTTPRequestHandler):
-    server_version = "Lythosle"
+    server_version = "LythosLE"
     protocol_version = "HTTP/1.1"
 
     # -- helpers ---------------------------------------------------------
@@ -103,7 +103,7 @@ class Server(ThreadingHTTPServer):
 def serve(host: str = "127.0.0.1", port: int = 8000, open_browser: bool = False) -> None:
     httpd = Server((host, port), Handler)
     url = f"http://{host}:{port}/"
-    print(f"Lythosle is running on {url}  (Ctrl+C to stop)")
+    print(f"Lythos LE is running on {url}  (Ctrl+C to stop)")
     if open_browser:
         threading.Timer(0.8, lambda: webbrowser.open(url)).start()
     try:
@@ -116,7 +116,7 @@ def serve(host: str = "127.0.0.1", port: int = 8000, open_browser: bool = False)
 
 if __name__ == "__main__":
     import argparse
-    ap = argparse.ArgumentParser(description="Serve the Lythosle web interface")
+    ap = argparse.ArgumentParser(description="Serve the Lythos LE web interface")
     ap.add_argument("--host", default="127.0.0.1")
     ap.add_argument("--port", type=int, default=8000)
     ap.add_argument("--open", action="store_true", help="open a browser window")

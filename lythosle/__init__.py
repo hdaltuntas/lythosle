@@ -1,4 +1,4 @@
-"""Lythosle - limit equilibrium slope stability analysis.
+"""Lythos LE - limit equilibrium slope stability analysis.
 
 A dependency-free Python engine (plus a browser front end) that computes the
 factor of safety of slopes and embankments with the classical method of

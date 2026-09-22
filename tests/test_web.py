@@ -104,7 +104,7 @@ class TestServer(unittest.TestCase):
     def test_serves_the_page(self):
         status, body = self.get("/")
         self.assertEqual(status, 200)
-        self.assertIn(b"Lythosle", body)
+        self.assertIn(b"Lythos LE", body)
         for asset in ("/styles.css", "/app.js"):
             status, body = self.get(asset)
             self.assertEqual(status, 200)

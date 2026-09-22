@@ -29,7 +29,7 @@ from .api import handle_request
 
 STATIC_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static")
 
-app = FastAPI(title="Lythosle", description="Limit equilibrium slope stability",
+app = FastAPI(title="Lythos LE", description="Limit equilibrium slope stability",
               version="1.0.0")
 
 

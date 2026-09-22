@@ -78,7 +78,7 @@ def _run(model_data: Dict[str, Any], options_data: Dict[str, Any],
 def build_parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser(
         prog="lythosle",
-        description="Limit equilibrium slope stability analysis "
+        description="Lythos LE - limit equilibrium slope stability analysis "
                     f"(version {__version__})")
     ap.add_argument("--version", action="version", version=f"lythosle {__version__}")
     sub = ap.add_subparsers(dest="command", required=True)

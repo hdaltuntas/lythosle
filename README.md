@@ -1,8 +1,8 @@
-# Lythosle
+# Lythos LE
 
 Limit equilibrium slope stability analysis in pure Python, with a browser front end.
 
-Lythosle computes the factor of safety of slopes and embankments with the method
+Lythos LE computes the factor of safety of slopes and embankments with the method
 of slices, the same class of analysis as Rocscience Slide or GeoStudio SLOPE/W.
 It searches for the critical slip surface, reports every classical method on it,
 and draws the section in the browser.
@@ -213,7 +213,7 @@ Worth knowing before you use a number in anger:
   or Morgenstern-Price for non-circular surfaces.
 * Spencer and Morgenstern-Price have no solution when `Fm` and `Ff` never
   intersect, which happens when reinforcement is large enough to satisfy force
-  equilibrium by itself. Lythosle reports this as "no solution" with both
+  equilibrium by itself. Lythos LE reports this as "no solution" with both
   values rather than inventing a number.
 * Reinforcement is applied as a known force at the intersection with the slip
   surface. Pull-out capacity along the anchored length is not calculated for

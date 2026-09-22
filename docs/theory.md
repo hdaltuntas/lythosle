@@ -1,6 +1,6 @@
 # Formulation
 
-This is what Lythosle actually computes. It is written so that a reviewer can
+This is what Lythos LE actually computes. It is written so that a reviewer can
 check the numbers by hand.
 
 ## 1. Coordinates and sign conventions
@@ -104,7 +104,7 @@ interslice forces are iterated to convergence and `F_m(λ)` and `F_f(λ)` are
 computed; `λ` is then found by bisection on `F_m − F_f`, seeded by a scan over
 `λ ∈ [−0.6, 1.4]`. Repeated evaluations (during surface optimisation) use a
 secant iteration warm-started from the previous `λ`. If the two curves never
-cross, there is no Spencer solution and Lythosle says so instead of reporting a
+cross, there is no Spencer solution and Lythos LE says so instead of reporting a
 number.
 
 **Ordinary / Fellenius** ignores interslice forces completely and resolves the
