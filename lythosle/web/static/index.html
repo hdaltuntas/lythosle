@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lythosle &middot; Slope stability</title>
+<meta name="description" content="Limit equilibrium slope stability analysis: Bishop, Janbu, Spencer and Morgenstern-Price factors of safety.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M3 26h26L20 8 12 19 8 15z' fill='none' stroke='%23D97757' stroke-width='2.5' stroke-linejoin='round'/%3E%3C/svg%3E">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <svg viewBox="0 0 32 32" aria-hidden="true" class="logo">
+      <path d="M3 26h26L20 8 12 19 8 15z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/>
+      <path d="M6 22c5-2 9 1 13-1" fill="none" stroke="currentColor" stroke-width="1.4" stroke-dasharray="2 2" opacity=".7"/>
+    </svg>
+    <div>
+      <h1>Lythosle</h1>
+      <p>Limit equilibrium slope stability</p>
+    </div>
+  </div>
+  <div class="topbar-actions">
+    <label class="field inline">
+      <span>Example</span>
+      <select id="example-select"><option value="">&mdash;</option></select>
+    </label>
+    <button id="theme-toggle" class="btn ghost icon" title="Switch theme" aria-label="Switch theme">
+      <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9z" fill="currentColor"/></svg>
+    </button>
+    <button id="run" class="btn primary">
+      <span class="spinner" hidden></span><span class="label">Run analysis</span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <!-- ------------------------------------------------ inputs -->
+  <aside class="sidebar" id="sidebar">
+    <details open>
+      <summary>Project</summary>
+      <div class="body">
+        <label class="field"><span>Name</span><input type="text" data-path="model.name"></label>
+        <div class="row">
+          <label class="field"><span>Units</span>
+            <select data-path="model.units">
+              <option value="metric">metric (kN/m&sup3;, kPa)</option>
+              <option value="imperial">imperial (pcf, psf)</option>
+            </select>
+          </label>
+          <label class="field"><span>Water unit weight</span>
+            <input type="number" step="0.01" data-path="model.water_unit_weight"></label>
+        </div>
+        <label class="field"><span>Failure direction</span>
+          <select data-path="options.direction">
+            <option value="auto">from the geometry</option>
+            <option value="left">mass slides to the left</option>
+            <option value="right">mass slides to the right</option>
+          </select>
+        </label>
+      </div>
+    </details>
+
+    <details open>
+      <summary>Geometry</summary>
+      <div class="body">
+        <div class="seg" role="tablist">
+          <button class="seg-btn active" data-geom="template">Template</button>
+          <button class="seg-btn" data-geom="points">Points</button>
+        </div>
+        <div id="geom-template">
+          <div class="row">
+            <label class="field"><span>Height H</span><input type="number" step="0.1" id="t-height" value="10"></label>
+            <label class="field"><span>Face slope (H:1V)</span><input type="number" step="0.05" id="t-ratio" value="2"></label>
+          </div>
+          <div class="row">
+            <label class="field"><span>Toe bench</span><input type="number" step="1" id="t-toe" value="12"></label>
+            <label class="field"><span>Crest bench</span><input type="number" step="1" id="t-crest" value="20"></label>
+          </div>
+          <button class="btn subtle full" id="t-apply">Build profile</button>
+          <p class="hint">The crest sits on the right and the mass slides to the left, which is the convention the solver uses internally.</p>
+        </div>
+        <div id="geom-points" hidden>
+          <label class="field"><span>Ground surface &mdash; one <code>x y</code> pair per line</span>
+            <textarea rows="6" data-points="model.profile"></textarea></label>
+        </div>
+      </div>
+    </details>
+
+    <details open>
+      <summary>Materials</summary>
+      <div class="body">
+        <div id="materials"></div>
+        <button class="btn subtle full" id="add-material">+ Add material</button>
+      </div>
+    </details>
+
+    <details>
+      <summary>Layers</summary>
+      <div class="body">
+        <p class="hint">Layers are listed from the top down. The first one starts at the ground surface; every layer below it needs a boundary.</p>
+        <div id="layers"></div>
+        <button class="btn subtle full" id="add-layer">+ Add layer</button>
+      </div>
+    </details>
+
+    <details>
+      <summary>Groundwater</summary>
+      <div class="body">
+        <label class="field"><span>Model</span>
+          <select id="water-mode">
+            <option value="none">dry / none</option>
+            <option value="table">water table</option>
+          </select>
+        </label>
+        <div id="water-fields" hidden>
+          <label class="field"><span>Water table &mdash; <code>x y</code> per line</span>
+            <textarea rows="5" data-points="model.water_table"></textarea></label>
+        </div>
+        <p class="hint">A pore-pressure ratio r<sub>u</sub> can be set per material instead; it overrides the water table for that material.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Loading</summary>
+      <div class="body">
+        <div class="row">
+          <label class="field"><span>Seismic k<sub>h</sub></span>
+            <input type="number" step="0.01" data-path="model.seismic.kh"></label>
+          <label class="field"><span>Seismic k<sub>v</sub></span>
+            <input type="number" step="0.01" data-path="model.seismic.kv"></label>
+        </div>
+        <h4>Surcharges</h4>
+        <div id="surcharges"></div>
+        <button class="btn subtle full" id="add-surcharge">+ Add surcharge</button>
+        <h4>Reinforcement</h4>
+        <div id="supports"></div>
+        <button class="btn subtle full" id="add-support">+ Add support</button>
+        <h4>Tension crack</h4>
+        <label class="check"><input type="checkbox" data-path="model.tension_crack.enabled"> Include a tension crack</label>
+        <div class="row">
+          <label class="field"><span>Depth</span><input type="number" step="0.1" data-path="model.tension_crack.depth"></label>
+          <label class="field"><span>Water fill (0&ndash;1)</span><input type="number" step="0.1" min="0" max="1" data-path="model.tension_crack.water_fill"></label>
+        </div>
+        <label class="check"><input type="checkbox" data-path="model.tension_crack.auto"> Estimate the depth from the strength</label>
+      </div>
+    </details>
+
+    <details open>
+      <summary>Analysis</summary>
+      <div class="body">
+        <fieldset id="methods"><legend>Methods</legend></fieldset>
+        <div class="row">
+          <label class="field"><span>Search / report method</span>
+            <select data-path="options.search.method" id="primary-method"></select></label>
+          <label class="field"><span>Slices</span>
+            <input type="number" min="10" max="500" step="5" data-path="options.n_slices"></label>
+        </div>
+        <label class="field"><span>Interslice function (Morgenstern-Price)</span>
+          <select data-path="options.force_function">
+            <option value="half_sine">half sine</option>
+            <option value="constant">constant</option>
+            <option value="trapezoidal">trapezoidal</option>
+          </select>
+        </label>
+        <label class="check"><input type="checkbox" data-path="options.search.optimize">
+          Optimise a non-circular surface (Spencer)</label>
+        <label class="check"><input type="checkbox" data-path="options.search_each_method">
+          Search separately for every method (slower)</label>
+        <h4>Circle search</h4>
+        <div class="row">
+          <label class="field"><span>Centres in x</span><input type="number" min="2" max="60" data-path="options.search.nx"></label>
+          <label class="field"><span>Centres in y</span><input type="number" min="2" max="60" data-path="options.search.ny"></label>
+        </div>
+        <div class="row">
+          <label class="field"><span>Tangent levels</span><input type="number" min="2" max="60" data-path="options.search.n_tangent"></label>
+          <label class="field"><span>Refinements</span><input type="number" min="0" max="6" data-path="options.search.refine_passes"></label>
+        </div>
+        <label class="check"><input type="checkbox" id="manual-box"> Set the search box by hand</label>
+        <div id="box-fields" hidden>
+          <div class="row">
+            <label class="field"><span>Centre x from</span><input type="number" step="0.5" id="box-x0"></label>
+            <label class="field"><span>to</span><input type="number" step="0.5" id="box-x1"></label>
+          </div>
+          <div class="row">
+            <label class="field"><span>Centre y from</span><input type="number" step="0.5" id="box-y0"></label>
+            <label class="field"><span>to</span><input type="number" step="0.5" id="box-y1"></label>
+          </div>
+          <div class="row">
+            <label class="field"><span>Tangent y from</span><input type="number" step="0.5" id="box-t0"></label>
+            <label class="field"><span>to</span><input type="number" step="0.5" id="box-t1"></label>
+          </div>
+        </div>
+      </div>
+    </details>
+
+    <details>
+      <summary>Model JSON</summary>
+      <div class="body">
+        <textarea id="json-editor" rows="14" spellcheck="false"></textarea>
+        <div class="row">
+          <button class="btn subtle" id="json-apply">Apply</button>
+          <button class="btn subtle" id="json-download">Download</button>
+        </div>
+        <p class="hint" id="json-status"></p>
+      </div>
+    </details>
+  </aside>
+
+  <!-- ------------------------------------------------ workspace -->
+  <section class="workspace">
+    <div class="card plot-card">
+      <div class="card-head">
+        <h2>Section</h2>
+        <div class="toggles">
+          <label class="check tiny"><input type="checkbox" id="show-slices"> slices</label>
+          <label class="check tiny"><input type="checkbox" id="show-grid" checked> search grid</label>
+          <label class="check tiny"><input type="checkbox" id="show-legend" checked> legend</label>
+          <button class="btn ghost tiny" id="download-svg">SVG</button>
+        </div>
+      </div>
+      <div class="plot-wrap"><svg id="plot" role="img" aria-label="Slope section"></svg></div>
+    </div>
+
+    <div class="card result-card">
+      <div class="fs-hero">
+        <div>
+          <p class="eyebrow">Factor of safety</p>
+          <p class="fs-value" id="fs-value">&mdash;</p>
+          <p class="fs-method" id="fs-method">run an analysis to begin</p>
+        </div>
+        <div class="fs-meta" id="fs-meta"></div>
+      </div>
+      <div class="table-wrap">
+        <table id="method-table">
+          <thead><tr><th>Method</th><th>FS</th><th>Equilibrium</th><th>&lambda;</th><th>Iter.</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <ul class="notes" id="notes"></ul>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="tabs" id="tabs">
+          <button class="tab active" data-tab="slices">Slice forces</button>
+          <button class="tab" data-tab="lambda">&lambda; &ndash; FS plot</button>
+          <button class="tab" data-tab="summary">Summary</button>
+        </div>
+        <button class="btn ghost tiny" id="download-csv">CSV</button>
+      </div>
+      <div class="tab-panel" data-panel="slices">
+        <div class="table-wrap tall"><table id="slice-table"><thead></thead><tbody></tbody></table></div>
+      </div>
+      <div class="tab-panel" data-panel="lambda" hidden>
+        <svg id="lambda-plot" role="img" aria-label="Factor of safety against lambda"></svg>
+        <p class="hint">Spencer and Morgenstern-Price solve for the interslice force
+          ratio &lambda; where the moment and force factors of safety are equal.</p>
+      </div>
+      <div class="tab-panel" data-panel="summary" hidden>
+        <pre id="summary"></pre>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="toast" class="toast" hidden></div>
+<script src="app.js"></script>
+</body>
+</html>

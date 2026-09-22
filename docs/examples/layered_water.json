@@ -1,0 +1,129 @@
+{
+  "model": {
+    "name": "Layered slope with groundwater",
+    "units": "metric",
+    "profile": [
+      [
+        0,
+        0
+      ],
+      [
+        18,
+        0
+      ],
+      [
+        48,
+        15
+      ],
+      [
+        75,
+        15
+      ]
+    ],
+    "materials": [
+      {
+        "name": "Weathered fill",
+        "unit_weight": 18.0,
+        "sat_unit_weight": 19.5,
+        "cohesion": 5.0,
+        "friction_angle": 26.0,
+        "color": "#C4A883"
+      },
+      {
+        "name": "Stiff clay",
+        "unit_weight": 19.0,
+        "sat_unit_weight": 20.0,
+        "cohesion": 15.0,
+        "friction_angle": 22.0,
+        "color": "#9B8AA6"
+      },
+      {
+        "name": "Dense sand",
+        "unit_weight": 20.0,
+        "sat_unit_weight": 21.0,
+        "cohesion": 0.0,
+        "friction_angle": 36.0,
+        "color": "#B5A642"
+      }
+    ],
+    "layers": [
+      {
+        "material": "Weathered fill"
+      },
+      {
+        "material": "Stiff clay",
+        "boundary": [
+          [
+            0,
+            -4
+          ],
+          [
+            18,
+            -4
+          ],
+          [
+            48,
+            7
+          ],
+          [
+            75,
+            7
+          ]
+        ]
+      },
+      {
+        "material": "Dense sand",
+        "boundary": [
+          [
+            0,
+            -12
+          ],
+          [
+            75,
+            -6
+          ]
+        ]
+      }
+    ],
+    "water_table": [
+      [
+        0,
+        -2.0
+      ],
+      [
+        18,
+        -1.5
+      ],
+      [
+        30,
+        3.5
+      ],
+      [
+        48,
+        9.0
+      ],
+      [
+        75,
+        9.5
+      ]
+    ]
+  },
+  "options": {
+    "methods": [
+      "ordinary",
+      "bishop",
+      "janbu_corrected",
+      "spencer",
+      "morgenstern_price"
+    ],
+    "n_slices": 60,
+    "search": {
+      "mode": "auto",
+      "method": "bishop",
+      "nx": 14,
+      "ny": 14,
+      "n_tangent": 14,
+      "refine_passes": 3
+    }
+  }
+}

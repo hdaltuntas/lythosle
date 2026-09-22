@@ -1,0 +1,56 @@
+{
+  "model": {
+    "name": "Homogeneous slope",
+    "units": "metric",
+    "profile": [
+      [
+        0,
+        0
+      ],
+      [
+        10,
+        0
+      ],
+      [
+        30.0,
+        10
+      ],
+      [
+        50.0,
+        10
+      ]
+    ],
+    "materials": [
+      {
+        "name": "Embankment fill",
+        "unit_weight": 20.0,
+        "cohesion": 3.0,
+        "friction_angle": 19.6,
+        "color": "#C4A883"
+      }
+    ],
+    "layers": [
+      {
+        "material": "Embankment fill"
+      }
+    ]
+  },
+  "options": {
+    "methods": [
+      "ordinary",
+      "bishop",
+      "janbu_corrected",
+      "spencer",
+      "morgenstern_price"
+    ],
+    "n_slices": 50,
+    "search": {
+      "mode": "auto",
+      "method": "bishop",
+      "nx": 14,
+      "ny": 14,
+      "n_tangent": 14,
+      "refine_passes": 3
+    }
+  }
+}

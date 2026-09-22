@@ -1,0 +1,82 @@
+{
+  "model": {
+    "name": "Clay cutting with tension crack",
+    "units": "metric",
+    "profile": [
+      [
+        0,
+        0
+      ],
+      [
+        14,
+        0
+      ],
+      [
+        32,
+        12
+      ],
+      [
+        58,
+        12
+      ]
+    ],
+    "materials": [
+      {
+        "name": "Stiff clay",
+        "unit_weight": 19.5,
+        "sat_unit_weight": 20.0,
+        "strength_model": "undrained",
+        "su": 60.0,
+        "color": "#9B8AA6"
+      }
+    ],
+    "layers": [
+      {
+        "material": "Stiff clay"
+      }
+    ],
+    "water_table": [
+      [
+        0,
+        -1
+      ],
+      [
+        14,
+        -1
+      ],
+      [
+        32,
+        6
+      ],
+      [
+        58,
+        7
+      ]
+    ],
+    "tension_crack": {
+      "enabled": true,
+      "depth": 3.0,
+      "water_fill": 1.0
+    }
+  },
+  "options": {
+    "methods": [
+      "ordinary",
+      "bishop",
+      "spencer",
+      "morgenstern_price"
+    ],
+    "n_slices": 50,
+    "search": {
+      "mode": "auto",
+      "method": "bishop",
+      "nx": 14,
+      "ny": 14,
+      "n_tangent": 14,
+      "refine_passes": 3,
+      "optimize": true,
+      "optimize_vertices": 20,
+      "optimize_passes": 30
+    }
+  }
+}

@@ -1,0 +1,117 @@
+{
+  "model": {
+    "name": "Embankment on soft clay",
+    "units": "metric",
+    "profile": [
+      [
+        0,
+        0
+      ],
+      [
+        12,
+        0
+      ],
+      [
+        24,
+        6
+      ],
+      [
+        44,
+        6
+      ],
+      [
+        56,
+        0
+      ],
+      [
+        70,
+        0
+      ]
+    ],
+    "materials": [
+      {
+        "name": "Granular fill",
+        "unit_weight": 20.0,
+        "sat_unit_weight": 21.0,
+        "cohesion": 0.0,
+        "friction_angle": 34.0,
+        "color": "#C4A883"
+      },
+      {
+        "name": "Soft clay",
+        "unit_weight": 16.5,
+        "sat_unit_weight": 16.5,
+        "strength_model": "undrained",
+        "su": 12.0,
+        "su_gradient": 1.8,
+        "su_datum": 0.0,
+        "color": "#7EA89B"
+      },
+      {
+        "name": "Firm base",
+        "unit_weight": 21.0,
+        "strength_model": "infinite",
+        "impenetrable": true,
+        "color": "#8C8C8C"
+      }
+    ],
+    "layers": [
+      {
+        "material": "Granular fill"
+      },
+      {
+        "material": "Soft clay",
+        "boundary": [
+          [
+            0,
+            0
+          ],
+          [
+            70,
+            0
+          ]
+        ]
+      },
+      {
+        "material": "Firm base",
+        "boundary": [
+          [
+            0,
+            -12
+          ],
+          [
+            70,
+            -12
+          ]
+        ]
+      }
+    ],
+    "water_table": [
+      [
+        0,
+        0
+      ],
+      [
+        70,
+        0
+      ]
+    ]
+  },
+  "options": {
+    "methods": [
+      "ordinary",
+      "bishop",
+      "janbu_corrected",
+      "spencer"
+    ],
+    "n_slices": 60,
+    "search": {
+      "mode": "auto",
+      "method": "bishop",
+      "nx": 16,
+      "ny": 14,
+      "n_tangent": 16,
+      "refine_passes": 3
+    }
+  }
+}

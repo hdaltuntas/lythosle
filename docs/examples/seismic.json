@@ -1,0 +1,115 @@
+{
+  "model": {
+    "name": "Pseudo-static analysis",
+    "units": "metric",
+    "profile": [
+      [
+        0,
+        0
+      ],
+      [
+        18,
+        0
+      ],
+      [
+        42,
+        12
+      ],
+      [
+        70,
+        12
+      ]
+    ],
+    "materials": [
+      {
+        "name": "Colluvium",
+        "unit_weight": 19.0,
+        "sat_unit_weight": 20.0,
+        "cohesion": 8.0,
+        "friction_angle": 28.0,
+        "color": "#C4A883"
+      },
+      {
+        "name": "Residual soil",
+        "unit_weight": 20.0,
+        "sat_unit_weight": 21.0,
+        "cohesion": 20.0,
+        "friction_angle": 30.0,
+        "color": "#9B8AA6"
+      }
+    ],
+    "layers": [
+      {
+        "material": "Colluvium"
+      },
+      {
+        "material": "Residual soil",
+        "boundary": [
+          [
+            0,
+            -6
+          ],
+          [
+            18,
+            -6
+          ],
+          [
+            42,
+            4
+          ],
+          [
+            70,
+            4
+          ]
+        ]
+      }
+    ],
+    "water_table": [
+      [
+        0,
+        -3
+      ],
+      [
+        18,
+        -2
+      ],
+      [
+        42,
+        5
+      ],
+      [
+        70,
+        6
+      ]
+    ],
+    "seismic": {
+      "kh": 0.15,
+      "kv": 0.0
+    },
+    "surcharges": [
+      {
+        "x1": 44,
+        "x2": 62,
+        "pressure": 20.0,
+        "include_in_seismic": true
+      }
+    ]
+  },
+  "options": {
+    "methods": [
+      "bishop",
+      "janbu_corrected",
+      "spencer",
+      "morgenstern_price"
+    ],
+    "n_slices": 60,
+    "search": {
+      "mode": "auto",
+      "method": "bishop",
+      "nx": 14,
+      "ny": 14,
+      "n_tangent": 14,
+      "refine_passes": 3
+    }
+  }
+}
