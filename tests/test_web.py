@@ -76,8 +76,11 @@ class TestApi(unittest.TestCase):
             analyze_payload(payload)
 
     def test_static_files_exist(self):
-        for name in ("index.html", "styles.css", "app.js"):
+        for name in ("index.html", "styles.css", "app.js", "fonts.css"):
             self.assertTrue(os.path.isfile(os.path.join(STATIC_DIR, name)), name)
+        fonts = os.listdir(os.path.join(STATIC_DIR, "fonts"))
+        self.assertTrue([f for f in fonts if f.endswith(".woff2")],
+                        "the interface fonts are not bundled")
 
 
 class TestServer(unittest.TestCase):
@@ -105,7 +108,8 @@ class TestServer(unittest.TestCase):
         status, body = self.get("/")
         self.assertEqual(status, 200)
         self.assertIn(b"Lythos LE", body)
-        for asset in ("/styles.css", "/app.js"):
+        for asset in ("/styles.css", "/app.js", "/fonts.css",
+                      "/fonts/inter-500-latin.woff2"):
             status, body = self.get(asset)
             self.assertEqual(status, 200)
             self.assertTrue(body)

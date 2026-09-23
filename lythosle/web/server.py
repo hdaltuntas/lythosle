@@ -26,6 +26,7 @@ CONTENT_TYPES = {
     ".json": "application/json",
     ".svg": "image/svg+xml",
     ".ico": "image/x-icon",
+    ".woff2": "font/woff2",
 }
 
 MAX_BODY = 8 * 1024 * 1024

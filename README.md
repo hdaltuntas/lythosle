@@ -63,6 +63,13 @@ the header pins it.
 
 `?example=layered_water` and `?theme=dark` work as URL parameters.
 
+The interface follows Claude's design language: the ivory and charcoal
+surfaces, the clay accent, sentence-case labels and a serif for the wordmark,
+headings and prose. Claude's own faces (Styrene, Tiempos, Copernicus) are
+licensed, so the stack asks for them first and falls back to Inter and
+Newsreader, which are bundled in `lythosle/web/static/fonts/` — nothing is
+fetched from a CDN at runtime, and the page looks the same offline.
+
 If you prefer FastAPI, `uvicorn lythosle.web.app:app` serves exactly the same
 API (`pip install fastapi uvicorn` first).
 

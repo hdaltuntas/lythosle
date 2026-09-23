@@ -33,4 +33,4 @@ Source = "https://github.com/hdaltuntas/lythosle"
 include = ["lythosle*"]
 
 [tool.setuptools.package-data]
-lythosle = ["web/static/*"]
+lythosle = ["web/static/*", "web/static/fonts/*"]
