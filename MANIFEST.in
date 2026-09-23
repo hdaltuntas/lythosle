@@ -1,0 +1,7 @@
+include README.md
+include LICENSE
+include pyproject.toml
+recursive-include lythosle/web/static *
+recursive-include tests *.py
+recursive-include docs *.md *.json
+global-exclude __pycache__ *.py[cod] .DS_Store

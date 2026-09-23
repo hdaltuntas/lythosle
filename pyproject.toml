@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=61"]
+requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -8,15 +8,28 @@ version = "1.0.0"
 description = "Limit equilibrium slope stability analysis with a browser front end"
 readme = "README.md"
 requires-python = ">=3.9"
-license = { text = "MIT" }
-keywords = ["geotechnical", "slope stability", "limit equilibrium", "bishop",
-            "spencer", "morgenstern-price", "factor of safety"]
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "hdaltuntas" }]
+keywords = [
+  "geotechnical", "slope stability", "limit equilibrium", "factor of safety",
+  "bishop", "janbu", "spencer", "morgenstern-price", "method of slices",
+  "civil engineering", "geotechnics",
+]
 classifiers = [
   "Development Status :: 4 - Beta",
   "Intended Audience :: Science/Research",
-  "License :: OSI Approved :: MIT License",
+  "Intended Audience :: Education",
+  "Operating System :: OS Independent",
   "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
   "Topic :: Scientific/Engineering",
+  "Topic :: Scientific/Engineering :: Physics",
+  "Typing :: Typed",
 ]
 dependencies = []
 
@@ -27,7 +40,10 @@ fastapi = ["fastapi>=0.100", "uvicorn>=0.23"]
 lythosle = "lythosle.cli:main"
 
 [project.urls]
+Homepage = "https://github.com/hdaltuntas/lythosle"
 Source = "https://github.com/hdaltuntas/lythosle"
+Issues = "https://github.com/hdaltuntas/lythosle/issues"
+Documentation = "https://github.com/hdaltuntas/lythosle#readme"
 
 [tool.setuptools.packages.find]
 include = ["lythosle*"]
