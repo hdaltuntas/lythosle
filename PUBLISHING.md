@@ -11,8 +11,8 @@ these files were prepared, and both distributions pass `twine check`.
 | `MANIFEST.in` | what goes into the source distribution |
 | `LICENSE` | MIT, shipped inside both distributions |
 | `README.md` | becomes the long description on the project page |
-| `dist/lythosle-1.0.0-py3-none-any.whl` | the wheel, ready to upload |
-| `dist/lythosle-1.0.0.tar.gz` | the source distribution, ready to upload |
+| `dist/lythosle-0.1.0-py3-none-any.whl` | the wheel, ready to upload |
+| `dist/lythosle-0.1.0.tar.gz` | the source distribution, ready to upload |
 
 The wheel was installed into a clean virtual environment and checked outside
 the source tree: the `lythosle` command runs, the browser front end's static

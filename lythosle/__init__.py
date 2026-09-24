@@ -23,7 +23,7 @@ from .model import Layer, Seismic, SlopeModel, Support, Surcharge, TensionCrack
 from .search import SearchLimits, SearchOptions, search_circular
 from .slices import SlipSurface, build_slices, circular_surface, polyline_surface
 
-__version__ = "1.0.0"
+__version__ = "0.1.0"
 
 __all__ = [
     "AnalysisOptions", "AnalysisResult", "analyze",
