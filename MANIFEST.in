@@ -1,6 +1,7 @@
 include README.md
 include LICENSE
 include pyproject.toml
+include main.py
 recursive-include lythosle/web/static *
 recursive-include tests *.py
 recursive-include docs *.md *.json

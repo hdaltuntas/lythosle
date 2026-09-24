@@ -25,14 +25,17 @@ and draws the section in the browser.
 git clone https://github.com/hdaltuntas/lythosle
 cd lythosle
 
-python -m lythosle serve --open        # browser interface on http://127.0.0.1:8000
-python -m lythosle example             # list the built-in examples
-python -m lythosle example homogeneous # run one and print the report
+python main.py                         # browser interface on http://127.0.0.1:8000
+python main.py example                 # list the built-in examples
+python main.py example homogeneous     # run one and print the report
 python -m unittest discover -s tests   # run the test suite
 ```
 
-Nothing needs installing. `pip install -e .` also works and adds a `lythosle`
-command.
+Nothing needs installing. `main.py` takes everything the CLI does and starts
+the web interface when given nothing; `HOST` and `PORT` override the address,
+so a host that sets `PORT` gets a server bound to every interface. The same
+commands are available as `python -m lythosle …`, and `pip install -e .` adds a
+`lythosle` command.
 
 ## What it does
 
@@ -233,6 +236,7 @@ Worth knowing before you use a number in anger:
 ## Project layout
 
 ```
+main.py          run the interface, or anything the CLI does
 lythosle/
   geometry.py    polylines, intersections, polygon helpers
   materials.py   strength models
