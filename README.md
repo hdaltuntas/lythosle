@@ -1,5 +1,9 @@
 # Lythos LE
 
+[![PyPI](https://img.shields.io/pypi/v/lythosle)](https://pypi.org/project/lythosle/)
+[![Python](https://img.shields.io/pypi/pyversions/lythosle)](https://pypi.org/project/lythosle/)
+[![Licence](https://img.shields.io/pypi/l/lythosle)](LICENSE)
+
 Limit equilibrium slope stability analysis in pure Python, with a browser front end.
 
 Lythos LE computes the factor of safety of slopes and embankments with the method
@@ -22,20 +26,29 @@ and draws the section in the browser.
 ## Quick start
 
 ```bash
+pip install lythosle
+
+lythosle serve --open         # browser interface on http://127.0.0.1:8000
+lythosle example              # list the built-in examples
+lythosle example homogeneous  # run one and print the report
+```
+
+Or straight from a clone, with nothing installed at all — the solver, the
+server and the front end are standard library only:
+
+```bash
 git clone https://github.com/hdaltuntas/lythosle
 cd lythosle
 
-python main.py                         # browser interface on http://127.0.0.1:8000
-python main.py example                 # list the built-in examples
-python main.py example homogeneous     # run one and print the report
+python main.py                         # same interface
+python main.py example homogeneous     # same commands
 python -m unittest discover -s tests   # run the test suite
 ```
 
-Nothing needs installing. `main.py` takes everything the CLI does and starts
-the web interface when given nothing; `HOST` and `PORT` override the address,
-so a host that sets `PORT` gets a server bound to every interface. The same
-commands are available as `python -m lythosle …`, and `pip install -e .` adds a
-`lythosle` command.
+`main.py` takes everything the CLI does and starts the web interface when
+given nothing; `HOST` and `PORT` override the address, so a host that sets
+`PORT` gets a server bound to every interface. The same commands are also
+available as `python -m lythosle …`.
 
 ## What it does
 
