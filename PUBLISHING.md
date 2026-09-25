@@ -9,7 +9,7 @@ these files were prepared, and both distributions pass `twine check`.
 |---|---|
 | `pyproject.toml` | package metadata (PEP 621 + PEP 639 licence) |
 | `MANIFEST.in` | what goes into the source distribution |
-| `LICENSE` | MIT, shipped inside both distributions |
+| `LICENSE` | GNU AGPL v3, shipped inside both distributions |
 | `README.md` | becomes the long description on the project page |
 | `dist/lythosle-0.1.0-py3-none-any.whl` | the wheel, ready to upload |
 | `dist/lythosle-0.1.0.tar.gz` | the source distribution, ready to upload |
@@ -120,9 +120,9 @@ Cutting a GitHub release then uploads the distributions by itself.
 
 ## Notes on the metadata
 
-* The licence uses the current PEP 639 form (`license = "MIT"` plus
+* The licence uses the current PEP 639 form (`license = "AGPL-3.0-only"` plus
   `license-files`), which needs `setuptools>=77` — that is pinned in
-  `[build-system]`. The old `License :: OSI Approved :: MIT License`
+  `[build-system]`. The old `License :: OSI Approved :: …` licence
   classifier must stay out: setuptools rejects the combination.
 * `authors` carries the name only. Add `email = "..."` if you want a contact
   address on the public project page.
